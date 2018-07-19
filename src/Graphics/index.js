@@ -1,33 +1,47 @@
-import React, { Component } from 'react';
-import logo from '../logo.svg';
+import React, {Component} from 'react';
+import AnimatedText from './AnimatedText';
+import {Replicant} from '../elements/replicant';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
+import { ConnectedRouter } from 'connected-react-router';
+import history from '../redux/history';
 
 class Graphics extends Component {
-
-  replicant = window.nodecg.Replicant('test')
-  state = {
-    value: ''
+	constructor(props) {
+    super(props);
+    this.state = {
+    	text: ''
+    };
   }
 
-  componentDidMount() {
-    this.replicant.on('change', this.onUpdate);
-  }
+  onTextChange = text => {
+    this.setState({text});
+	}
 
-  onUpdate = (newVal) => {
-    this.setState({
-      value: newVal
-    });
-  }
+	componentDidMount() {
+		console.log(window.nodecg);
+	}
 
-  render() {
-    const { value } = this.state;
+	render() {
+		const {text} = this.state;
 
-    return (
-      <React.Fragment>
-        <img style={{width: 50}} src={`build${logo}`} alt=""/>
-        <h1>{value}</h1>
-      </React.Fragment>
-    );
-  }
+		return (
+		<Provider store={store}>
+			<ConnectedRouter history={history}>
+				<div>
+
+				<Replicant
+					replicantName="test"
+					value={text}
+					onNewValue={this.onTextChange}
+				/>
+				<AnimatedText value={text} />
+				</div>
+
+			</ConnectedRouter>
+		</Provider>
+		);
+	}
 }
 
 export default Graphics;

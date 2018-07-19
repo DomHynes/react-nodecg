@@ -12,4 +12,5 @@ if (document.getElementById('graphics')) {
   ReactDOM.render(<Graphics />, document.getElementById('graphics'));
 }
 
+
 registerServiceWorker();
