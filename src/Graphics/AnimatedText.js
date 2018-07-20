@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { show, hide } from './animations';
+import { func, any } from 'prop-types'
+import { show, hide } from '../utils/animations';
 
 export default class AnimatedText extends Component {
+    static defaultProps = {
+        show: func,
+        hide: func,
+        value: any
+    }
 
     text = React.createRef();
 
@@ -15,14 +21,16 @@ export default class AnimatedText extends Component {
         this.setState({displayValue, hidden: true});
     }
 
-    componentDidUpdate(prevProps) {
+    show = async element => {
+        show(element);
+        this.setState({hidden: false})
+    }
 
+    componentDidUpdate(prevProps) {
         if (this.props.value !== prevProps.value) {
             this.hideAndUpdate(this.text.current, this.props.value)
         } else if (this.state.hidden) {
-
-            show(this.text.current);
-            this.setState({hidden: false});
+            this.show(this.text.current);
         }
     }
 
