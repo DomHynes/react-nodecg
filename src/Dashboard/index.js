@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import dlv from 'dlv';
 import { ReplicantInjector } from '../elements/replicant-injector';
 import { testDot } from '../utils/replicants';
+import { DebounceInput } from 'react-debounce-input';
 
 
 class Dashboard extends Component {
@@ -22,18 +23,17 @@ class Dashboard extends Component {
         replicants={[testDot]}
         render={
           ({ data, ready }) => (
-            ready ? <div style={this.styles.container}>
+            ready && <div style={this.styles.container}>
                 <img
                   style={{width: 100}}
                   alt=""
                 />
-                <input
+                <DebounceInput
+                  debounceTimeout={400}
                   onChange={ e => data[testDot].onUpdateDot('text')(e.target.value)}
                 />
                 <p> {dlv(data[testDot].value, 'text')} </p>
               </div>
-
-            : <p> not ready </p>
           )
         }
       />
