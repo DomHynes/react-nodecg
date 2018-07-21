@@ -37,7 +37,10 @@ export default class AnimatedText extends Component {
     render() {
         const { displayValue } = this.state;
         return (
-            <p ref={this.text} >{displayValue}</p>
+            <React.Fragment>
+                <p ref={this.text} >{displayValue}</p>
+                <button onClick={() => this.props.onUpdate('asdfasdfasdf')}> CLICK </button>
+            </React.Fragment>
         )
     }
 }

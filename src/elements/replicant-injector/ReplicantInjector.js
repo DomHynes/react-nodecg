@@ -4,6 +4,7 @@ import { array, func } from 'prop-types';
 class ReplicantInjector extends Component {
   state = {
     ready: false,
+    data: {}
   };
 
   static propTypes = {
@@ -11,20 +12,41 @@ class ReplicantInjector extends Component {
     render: func
   }
 
-  onNewValue = replicant => ( newData ) => {
-    this.setState({ [replicant]: newData })
+  replicants = {}
+
+  onNewValue = replicant => ( value ) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        [replicant]: {
+          ...this.state.data[replicant],
+          value
+        }
+      }
+    })
   }
 
-  createReplicantObjects = name => ({ name, replicant: window.nodecg.Replicant( name ) })
+  handleUpdateReplicant = replicant => value => replicant.value = value
+
+  createReplicantObjects = (data, name) => {
+    data[name] = { name, replicant: window.nodecg.Replicant( name ) }
+    data[name].onUpdate = this.handleUpdateReplicant(data[name].replicant)
+    return data;
+  }
 
   componentDidMount () {
     const { replicants } = this.props;
-    const replicantObjs = replicants.map( this.createReplicantObjects );
+    const replicantObjs = this.replicants = replicants.reduce( this.createReplicantObjects, {} );
 
-    window.NodeCG.waitForReplicants( ...replicantObjs.map( ({ replicant }) => replicant ) )
+    window.NodeCG.waitForReplicants( ...Object.values(replicantObjs).map( ({ replicant }) => replicant ) )
       .then(() => {
-        this.setState({ ready: true });
-        replicantObjs.forEach( ({ replicant, name }) => replicant.on('change', this.onNewValue( name )) );
+        this.setState({
+          ready: true,
+          data: {
+            ...replicantObjs
+          }
+        });
+        Object.values(replicantObjs).forEach( ({ replicant, name, }) => replicant.on('change', this.onNewValue( name )) );
       });
   }
 
