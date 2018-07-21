@@ -22,7 +22,7 @@ export default class AnimatedText extends Component {
     }
 
     show = async element => {
-        show(element);
+        await show(element);
         this.setState({hidden: false})
     }
 

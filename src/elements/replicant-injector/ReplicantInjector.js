@@ -36,7 +36,7 @@ class ReplicantInjector extends Component {
 
   componentDidMount () {
     const { replicants } = this.props;
-    const replicantObjs = this.replicants = replicants.reduce( this.createReplicantObjects, {} );
+    const replicantObjs  = replicants.reduce( this.createReplicantObjects, {} );
 
     window.NodeCG.waitForReplicants( ...Object.values(replicantObjs).map( ({ replicant }) => replicant ) )
       .then(() => {
