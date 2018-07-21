@@ -15,7 +15,7 @@ class ReplicantInjector extends Component {
 
   replicants = {}
 
-  onNewValue = replicant => ( value ) => {
+  onNewValue = replicant => value => {
     console.log(this.state);
     this.setState({
       data: {
@@ -39,7 +39,7 @@ class ReplicantInjector extends Component {
       replicant,
       onUpdate: this.handleUpdateReplicant(replicant),
       onUpdateDot: this.handleUpdateReplicantDotNotation(replicant),
-      value: null
+      value: {}
     }
     return data;
   }
@@ -55,10 +55,10 @@ class ReplicantInjector extends Component {
           data: {
             ...replicantObjs
           }
-        }, () =>     Object.values(replicantObjs).forEach(
+        });
+        Object.values(replicantObjs).forEach(
           ({ replicant, name }) => replicant.on('change', this.onNewValue( name ))
         )
-      );
       });
   }
 
