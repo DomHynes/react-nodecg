@@ -39,7 +39,7 @@ class ReplicantInjector extends Component {
       replicant,
       onUpdate: this.handleUpdateReplicant(replicant),
       onUpdateDot: this.handleUpdateReplicantDotNotation(replicant),
-      value: {}
+      value: null
     }
     return data;
   }
@@ -48,8 +48,6 @@ class ReplicantInjector extends Component {
     const { replicants } = this.props;
     const replicantObjs  = replicants.reduce( this.createReplicantObjects, {} );
 
-    Object.values(replicantObjs).forEach( ({ replicant, name, }) => replicant.on('change', this.onNewValue( name )) );
-
     window.NodeCG.waitForReplicants( ...Object.values(replicantObjs).map( ({ replicant }) => replicant ) )
       .then(() => {
         this.setState({
@@ -57,7 +55,10 @@ class ReplicantInjector extends Component {
           data: {
             ...replicantObjs
           }
-        });
+        }, () =>     Object.values(replicantObjs).forEach(
+          ({ replicant, name }) => replicant.on('change', this.onNewValue( name ))
+        )
+      );
       });
   }
 

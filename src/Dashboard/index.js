@@ -39,7 +39,7 @@ class Dashboard extends Component {
                 />
                 <input
                   value={dlv(data['testDot'].value, 'text')}
-                  onChange={ (e) => data['testDot'].onUpdateDot('text')(e.target.value) }
+                  onChange={ e => data['testDot'].onUpdateDot('text')(e.target.value) }
                   type="text"
                 />
                 <p> {dlv(data['testDot'].value, 'text')} </p>
