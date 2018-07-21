@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { array, func } from 'prop-types';
+import bury from 'bury';
 
 class ReplicantInjector extends Component {
   state = {
@@ -15,6 +16,7 @@ class ReplicantInjector extends Component {
   replicants = {}
 
   onNewValue = replicant => ( value ) => {
+    console.log(this.state);
     this.setState({
       data: {
         ...this.state.data,
@@ -28,15 +30,25 @@ class ReplicantInjector extends Component {
 
   handleUpdateReplicant = replicant => value => replicant.value = value
 
+  handleUpdateReplicantDotNotation = replicant => dot => value => bury(replicant.value, dot, value)
+
   createReplicantObjects = (data, name) => {
-    data[name] = { name, replicant: window.nodecg.Replicant( name ) }
-    data[name].onUpdate = this.handleUpdateReplicant(data[name].replicant)
+    const replicant = window.nodecg.Replicant( name );
+    data[name] = {
+      name,
+      replicant,
+      onUpdate: this.handleUpdateReplicant(replicant),
+      onUpdateDot: this.handleUpdateReplicantDotNotation(replicant),
+      value: {}
+    }
     return data;
   }
 
   componentDidMount () {
     const { replicants } = this.props;
     const replicantObjs  = replicants.reduce( this.createReplicantObjects, {} );
+
+    Object.values(replicantObjs).forEach( ({ replicant, name, }) => replicant.on('change', this.onNewValue( name )) );
 
     window.NodeCG.waitForReplicants( ...Object.values(replicantObjs).map( ({ replicant }) => replicant ) )
       .then(() => {
@@ -46,7 +58,6 @@ class ReplicantInjector extends Component {
             ...replicantObjs
           }
         });
-        Object.values(replicantObjs).forEach( ({ replicant, name, }) => replicant.on('change', this.onNewValue( name )) );
       });
   }
 

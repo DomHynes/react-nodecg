@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import debounce from 'lodash/debounce';
+import dlv from 'dlv';
+import { ReplicantInjector } from '../elements/replicant-injector';
+import { test } from '../utils/replicants';
+
 
 class Dashboard extends Component {
 
   displayReplicant = window.nodecg.Replicant('test')
 
   constructor(props) {
+    console.log(test);
     super(props);
     this.state = {
       text: ''
     }
-    this.displayReplicant.on('change', text => this.setState({ text }) );
-    this.updateText = debounce(this.updateText, 300);
   }
 
   styles = {
@@ -22,23 +25,31 @@ class Dashboard extends Component {
       alignItems: 'center'
     }
   }
-
-  onChange = ({ target: { value } }) => {
-    this.setState({ text: value }, () => this.updateText(value));
-  }
-
-  updateText = text => this.displayReplicant.value = text
-
   render() {
-    const { text } = this.state;
 
     return (
-      <div style={this.styles.container}>
-        <img style={{width: 100}} src={`build${logo}`} alt=""/>
-        <input value={text} onChange={this.onChange} type="text"/>
-        <p> {this.displayReplicant.value} </p>
-      </div>
-    );
+      <ReplicantInjector
+        replicants={['testDot']}
+        render={
+          ({ data, ready }) => (
+            ready ? <div style={this.styles.container}>
+                <img
+                  style={{width: 100}}
+                  alt=""
+                />
+                <input
+                  value={dlv(data['testDot'].value, 'text')}
+                  onChange={ (e) => data['testDot'].onUpdateDot('text')(e.target.value) }
+                  type="text"
+                />
+                <p> {dlv(data['testDot'].value, 'text')} </p>
+              </div>
+
+            : <p> not ready </p>
+          )
+        }
+      />
+    )
   }
 }
 
