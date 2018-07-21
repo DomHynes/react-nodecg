@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Dashboard from './Dashboard';
-import Graphics from './Graphics';
+import Dashboard from './views/Dashboard';
+import Graphics from './views/Graphics';
 import registerServiceWorker from './registerServiceWorker';
 
 if (document.getElementById('dashboard')) {

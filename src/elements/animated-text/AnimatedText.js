@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func, any } from 'prop-types'
-import { show, hide } from '../utils/animations';
+import { show, hide } from '../../utils/animations';
 
 export default class AnimatedText extends Component {
     static defaultProps = {
