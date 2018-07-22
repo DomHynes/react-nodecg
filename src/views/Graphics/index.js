@@ -10,7 +10,6 @@ const Graphics = () => (
 		render={ ( ({ data, ready }) =>
 			ready &&
 			<AnimatedText
-				{...data[testDot]}
 				value={dlv(data, [testDot, 'value', 'text']) || ''}
 				/>
 			) }

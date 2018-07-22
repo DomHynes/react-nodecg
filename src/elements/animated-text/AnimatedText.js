@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { func, any } from 'prop-types'
 import { show, hide } from '../../utils/animations';
+import { Textfit } from 'react-textfit';
+
 
 export default class AnimatedText extends Component {
     static defaultProps = {
@@ -37,7 +39,17 @@ export default class AnimatedText extends Component {
     render() {
         const { displayValue } = this.state;
         return (
-            <p ref={this.text} >{displayValue}</p>
+            <div
+                ref={this.text}
+                id="textWrapper"
+            >
+                <Textfit
+                    style={{width: "1000px", height: "200px" }}
+                    mode="single"
+                >
+                    {displayValue}
+                </Textfit>
+            </div>
         )
     }
 }

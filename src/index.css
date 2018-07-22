@@ -3,7 +3,12 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
-p {
+#textWrapper {
   display: inline-block;
   position: relative;
+}
+#textWrapper > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

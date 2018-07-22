@@ -11,12 +11,18 @@
   "dependencies": {
     "bury": "^0.1.0",
     "dlv": "^1.1.2",
+    "eslint": "^4.19.1",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-flowtype": "^2.46.1",
     "gsap": "^2.0.1",
     "lodash": "^4.17.10",
     "react": "^16.3.2",
     "react-debounce-input": "^3.2.0",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-router": "^4.3.1",
+    "react-router-config": "^1.0.0-beta.4",
+    "react-scripts": "1.1.4",
+    "react-textfit": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -36,14 +42,14 @@
     "nodecg-bundle"
   ],
   "nodecg": {
-    "compatibleRange": "~1.0.0",
+    "compatibleRange": "~1.1.0",
     "dashboardPanels": [
       {
         "name": "test",
         "title": "Test",
-        "width": 2,
         "file": "index.html",
-        "headerColor": "#9f9bbd"
+        "headerColor": "#9f9bbd",
+        "fullbleed": true
       }
     ],
     "graphics": [
