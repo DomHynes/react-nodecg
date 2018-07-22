@@ -7,10 +7,7 @@ class Sidebar extends Component {
     return (
       <ul id="sidebar">
         <li>
-          <Link to="/bundles/test/dashboard/names">Names</Link>
-        </li>
-        <li>
-          <Link to="/bundles/test/dashboard/">Names</Link>
+          <Link to="/bundles/test/dashboard/setinfo">Set Info</Link>
         </li>
       </ul>
     )

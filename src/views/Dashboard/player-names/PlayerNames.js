@@ -3,7 +3,7 @@ import dlv from 'dlv';
 import { DebounceInput } from 'react-debounce-input';
 
 import { ReplicantInjector } from '../../../elements/replicant-injector';
-import { testDot } from '../../../utils/replicants';
+import { setInfo } from '../../../utils/replicants';
 
 
 class PlayerNames extends Component {
@@ -19,16 +19,21 @@ class PlayerNames extends Component {
   render() {
     return (
       <ReplicantInjector
-        replicants={[testDot]}
+        replicants={[setInfo]}
         render={
           ({ data, ready }) => (
-            ready && <div style={this.styles.container}>
+            ready && (
+              <div style={this.styles.container}>
                 <DebounceInput
                   debounceTimeout={400}
-                  onChange={ e => data[testDot].onUpdateDot('text')(e.target.value)}
+                  onChange={ e => data[setInfo].onUpdateDot('players.0.name')(e.target.value)}
                 />
-                <p> {dlv(data[testDot].value, 'text')} </p>
+                <DebounceInput
+                  debounceTimeout={400}
+                  onChange={ e => data[setInfo].onUpdateDot('players.1.name')(e.target.value)}
+                />
               </div>
+            )
           )
         }
       />

@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import dlv from 'dlv';
 import { AnimatedText } from '../../elements/animated-text';
 import { ReplicantInjector } from '../../elements/replicant-injector';
-import { testDot } from '../../utils/replicants';
+import { setInfo } from '../../utils/replicants';
 
 const Graphics = () => (
 	<ReplicantInjector
-		replicants={[testDot]}
-		render={ ( ({ data, ready }) =>
-			ready &&
-			<AnimatedText
-				value={dlv(data, [testDot, 'value', 'text']) || ''}
-				/>
+		replicants={[setInfo]}
+		render={ ( ({ data, ready }) => ready && (
+				<Fragment>
+					<AnimatedText
+						value={dlv(data[setInfo].value, 'players.0.name') || ''}
+					/>
+					<AnimatedText
+						value={dlv(data[setInfo].value, 'players.1.name') || ''}
+					/>
+				</Fragment>
+			)
 			) }
 		/>
 )
