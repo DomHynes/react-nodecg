@@ -12,3 +12,12 @@ body {
   align-items: center;
   justify-content: center;
 }
+#dashboard {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+}
+#dashboard > ul {
+  width: 200px;
+}
