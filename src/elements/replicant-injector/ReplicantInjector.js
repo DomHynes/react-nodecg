@@ -17,7 +17,6 @@ class ReplicantInjector extends Component {
   }
 
   onNewValue = replicant => (value, prevValue) => {
-    // this.props.onChange && this.props.onChange({replicant, value});
     this.setState({
       data: {
         ...this.state.data,
