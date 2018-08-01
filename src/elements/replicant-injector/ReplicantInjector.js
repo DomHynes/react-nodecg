@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { array, func } from 'prop-types';
+import { array, func, number } from 'prop-types';
 import bury from 'bury';
+import debounce from 'lodash.debounce';
 
 class ReplicantInjector extends Component {
   state = {
@@ -10,19 +11,23 @@ class ReplicantInjector extends Component {
 
   static propTypes = {
     replicants: array,
-    render: func
+    render: func,
+    debounce: number,
+    onChange: func,
   }
 
   replicants = {}
 
-  onNewValue = replicant => value => {
-    console.log(this.state);
+  onNewValue = replicant => (value, prevValue) => {
+    console.log(JSON.stringify({value, prevValue}))
+    // this.props.onChange && this.props.onChange({replicant, value});
     this.setState({
       data: {
         ...this.state.data,
         [replicant]: {
           ...this.state.data[replicant],
-          value
+          value,
+          prevValue
         }
       }
     })
@@ -30,35 +35,33 @@ class ReplicantInjector extends Component {
 
   handleUpdateReplicant = replicant => value => replicant.value = value
 
-  handleUpdateReplicantDotNotation = replicant => dot => value => bury(replicant.value, dot, value)
+  handleUpdateReplicantDotNotation = replicant => dot => value => {
+    this.props.debounce
+    ? debounce(bury(replicant.value, dot, value), this.props.debounce)
+    : bury(replicant.value, dot, value)
+  }
 
-  createReplicantObjects = (data, name) => {
-    const replicant = window.nodecg.Replicant( name );
-    data[name] = {
-      name,
+  createReplicantData = (data, replicant) => {
+    data[replicant.name] = {
+      name: replicant.name,
       replicant,
       onUpdate: this.handleUpdateReplicant(replicant),
       onUpdateDot: this.handleUpdateReplicantDotNotation(replicant),
-      value: {}
-    }
+      value: replicant.value
+    };
+    replicant.on('change', this.onNewValue(replicant.name))
     return data;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { replicants } = this.props;
-    const replicantObjs  = replicants.reduce( this.createReplicantObjects, {} );
-
-    window.NodeCG.waitForReplicants( ...Object.values(replicantObjs).map( ({ replicant }) => replicant ) )
+    const replicantObjs = replicants.map( slug => nodecg.Replicant(slug) )
+    window.NodeCG.waitForReplicants( ...replicantObjs )
       .then(() => {
         this.setState({
           ready: true,
-          data: {
-            ...replicantObjs
-          }
+          data: replicantObjs.reduce( this.createReplicantData, {} )
         });
-        Object.values(replicantObjs).forEach(
-          ({ replicant, name }) => replicant.on('change', this.onNewValue( name ))
-        )
       });
   }
 

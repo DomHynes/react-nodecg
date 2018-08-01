@@ -8,14 +8,14 @@ const Graphics = () => (
 	<ReplicantInjector
 		replicants={[setInfo]}
 		render={ ( ({ data, ready }) => ready && (
-				<Fragment>
+				<div>
 					<AnimatedText
 						value={dlv(data[setInfo].value, 'players.0.name') || ''}
 					/>
 					<AnimatedText
 						value={dlv(data[setInfo].value, 'players.1.name') || ''}
 					/>
-				</Fragment>
+				</div>
 			)
 			) }
 		/>
