@@ -7,13 +7,13 @@ import { setInfo } from '../../utils/replicants';
 const Graphics = () => (
 	<ReplicantInjector
 		replicants={[setInfo]}
-		render={ ( ({ data, ready }) => ready && (
+		render={ ( ({ data }) =>  (
 				<div>
 					<AnimatedText
-						value={dlv(data[setInfo].value, 'players.0.name') || ''}
+						value={dlv(data[setInfo], 'value.players.0.name')}
 					/>
 					<AnimatedText
-						value={dlv(data[setInfo].value, 'players.1.name') || ''}
+						value={dlv(data[setInfo], 'value.players.1.name')}
 					/>
 				</div>
 			)

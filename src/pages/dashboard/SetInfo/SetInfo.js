@@ -6,15 +6,6 @@ import dlv from 'dlv';
 import bury from 'bury';
 
 export default class SetInfo extends Component {
-
-  state = {
-  }
-
-  onInputChange = (replicant, property) => ({target: { value }}) => {
-    console.log({property, value})
-    replicant.onUpdateDot(property)(value);
-  }
-
   render() {
     return (
       <ReplicantInjector
@@ -27,7 +18,7 @@ export default class SetInfo extends Component {
                   <PlayerName
                     value={player.name}
                     key={index}
-                    onChange={this.onInputChange(data[setInfo], ['players', index, 'name'])}
+                    onChange={data[setInfo].onUpdateDot(['players', index, 'name'])}
                   />
                 )
               )}

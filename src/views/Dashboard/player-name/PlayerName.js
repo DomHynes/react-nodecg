@@ -20,11 +20,6 @@ class SetInfo extends Component {
     name: ''
   }
 
-  onChange = e => {
-    this.props.onChange( e );
-    console.log(e);
-  }
-
   static getDerivedStateFromProps(props, state) {
     console.log({props, state})
 
@@ -42,7 +37,7 @@ class SetInfo extends Component {
       <div style={this.styles.container}>
         <DebounceInput
           debounceTimeout={500}
-          onChange={ this.onChange }
+          onChange={ this.props.onChange }
           value={ this.state.name }
         />
       </div>

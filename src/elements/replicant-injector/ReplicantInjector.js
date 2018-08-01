@@ -16,10 +16,7 @@ class ReplicantInjector extends Component {
     onChange: func,
   }
 
-  replicants = {}
-
   onNewValue = replicant => (value, prevValue) => {
-    console.log(JSON.stringify({value, prevValue}))
     // this.props.onChange && this.props.onChange({replicant, value});
     this.setState({
       data: {
@@ -36,9 +33,10 @@ class ReplicantInjector extends Component {
   handleUpdateReplicant = replicant => value => replicant.value = value
 
   handleUpdateReplicantDotNotation = replicant => dot => value => {
+    let newValue = value.target !== undefined ? value.target.value : value;
     this.props.debounce
-    ? debounce(bury(replicant.value, dot, value), this.props.debounce)
-    : bury(replicant.value, dot, value)
+      ? debounce(bury(replicant.value, dot, newValue), this.props.debounce)
+      : bury(replicant.value, dot, newValue)
   }
 
   createReplicantData = (data, replicant) => {
@@ -55,7 +53,7 @@ class ReplicantInjector extends Component {
 
   componentDidMount() {
     const { replicants } = this.props;
-    const replicantObjs = replicants.map( slug => nodecg.Replicant(slug) )
+    const replicantObjs = replicants.map( slug => window.nodecg.Replicant(slug) )
     window.NodeCG.waitForReplicants( ...replicantObjs )
       .then(() => {
         this.setState({
