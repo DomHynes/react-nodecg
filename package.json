@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "antd": "^3.7.3",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
@@ -19,7 +20,6 @@
     "bury": "^0.1.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
-    "css-loader": "0.28.7",
     "dlv": "^1.1.2",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
@@ -31,7 +31,6 @@
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.4.0",
-    "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
     "gsap": "^2.0.1",
@@ -42,6 +41,7 @@
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
+    "query-string": "^6.1.0",
     "raf": "3.4.0",
     "react": "^16.3.2",
     "react-debounce-input": "^3.2.0",
@@ -51,7 +51,6 @@
     "react-router-config": "^1.0.0-beta.4",
     "react-textfit": "^1.1.0",
     "resolve": "1.6.0",
-    "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
@@ -83,7 +82,12 @@
         "title": "Test",
         "file": "index.html",
         "headerColor": "#9f9bbd",
-        "fullbleed": true
+        "fullbleed": true,
+        "path": "test",
+        "routes": [
+          "setinfo",
+          "set-scores"
+        ]
       }
     ],
     "graphics": [
@@ -92,7 +96,15 @@
         "width": 1280,
         "height": 720,
         "queryParams": {
-          "team": "one"
+          "route": "setinfo"
+        }
+      },
+      {
+        "file": "index.html",
+        "width": 1280,
+        "height": 720,
+        "queryParams": {
+          "route": "setscores"
         }
       },
       {
@@ -145,5 +157,11 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.19.0"
   }
 }

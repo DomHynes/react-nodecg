@@ -33,6 +33,7 @@ class ReplicantInjector extends Component {
 
   handleUpdateReplicantDotNotation = replicant => dot => value => {
     let newValue = value.target !== undefined ? value.target.value : value;
+    console.log({replicant, dot, value})
     this.props.debounce
       ? debounce(bury(replicant.value, dot, newValue), this.props.debounce)
       : bury(replicant.value, dot, newValue)

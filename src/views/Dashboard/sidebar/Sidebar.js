@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import { Menu } from 'antd';
+const { Item } = Menu;
 
 
 class Sidebar extends Component {
   render() {
     return (
-      <ul id="sidebar">
-        <li>
-          <Link to="/bundles/test/dashboard/setinfo">Set Info</Link>
-        </li>
-      </ul>
+        <Route
+          render={({ history: { location: { search } }}) => (
+            <Menu theme="dark">
+              <Item>
+                <Link to={{
+                  pathname: "/bundles/test/dashboard/setinfo",
+                  search
+                }}>Set Info</Link>
+              </Item>
+              <Item>
+                <Link to={{
+                  pathname: "/bundles/test/dashboard/text",
+                  search,
+                }}>text</Link>
+              </Item>
+            </Menu>
+      )} />
     )
   }
 }

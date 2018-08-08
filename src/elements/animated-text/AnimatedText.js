@@ -22,24 +22,22 @@ export default class AnimatedText extends Component {
     hideAndUpdate = async (element, displayValue) => {
         this.setState({animating: true});
         await hide(element);
-        this.setState({displayValue, hidden: true, animating: false});
+        this.setState({displayValue, hidden: true});
     }
 
     show = async element => {
-        this.setState({hidden: false, animating: true})
+        this.setState({hidden: false})
         await show(element);
-        this.setState({animating: false});
+        this.setState({animating: false})
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.value !== prevProps.value && !this.state.animating) {
-            if (!this.state.animating) {
-                this.hideAndUpdate(this.text.current, this.props.value)
-            } else {
-                // this.setState(animated)
-            }
-        } else if (this.state.hidden && !this.state.animating) {
-            this.show(this.text.current);
+    async componentDidUpdate(prevProps) {
+        if (!this.state.animating && this.props.value !== this.state.displayValue) {
+            this.hideAndUpdate(this.text.current, this.props.value)
+                .then(() => {
+                    this.show(this.text.current);
+                    console.log('ping')
+                });
         }
     }
 

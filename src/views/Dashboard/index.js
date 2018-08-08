@@ -4,11 +4,21 @@ import { renderRoutes } from 'react-router-config';
 import { DashboardRoutes } from '../../config/routes';
 import { Sidebar } from './sidebar';
 
+import { Layout } from 'antd';
+
+import 'antd/dist/antd.css';
+
+const { Sider, Content } = Layout;
+
 const Dashboard = () => (
   <Router>
     <Fragment>
-      <Sidebar />
-      {renderRoutes( DashboardRoutes )}
+      <Sider>
+        <Sidebar />
+      </Sider>
+      <Content>
+        {renderRoutes( DashboardRoutes )}
+      </Content>
     </Fragment>
   </Router>
 )
