@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { ReplicantInjector } from '../../../elements/replicant-injector';
+import { AnimatedText } from '../../../elements/animated-text';
 import { setInfo } from '../../../utils/replicants'
 import dlv from 'dlv';
-
-import { Form, Row, Col } from 'antd';
 
 export default class SetScores extends Component {
   render() {
@@ -12,12 +11,12 @@ export default class SetScores extends Component {
         replicants={[setInfo]}
         render={
           ({ data, ready }) => (
-              ready && dlv(data, [setInfo, 'value', 'teams']).map(
-                team => <p> {team.score} </p>
-              )
+            ready && dlv(data, [setInfo, 'value', 'teams']).map(
+              team => <AnimatedText value={team.score} />
+            )
           )
         }
-        />
+      />
     )
   }
 }

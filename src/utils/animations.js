@@ -4,7 +4,7 @@ const DURATION = 0.5;
 const HIDE_HEIGHT = 25;
 const SHOW_HIDE_EASE = Elastic.easeOut.config(0.25, 1);
 
-export const show = target => new Promise(resolve => {
+export const show = ({target, ease = SHOW_HIDE_EASE}) => new Promise(resolve => {
 TweenMax
 	.fromTo( target, DURATION, {
 			opacity: 0,

@@ -23,12 +23,12 @@ class PlayerName extends Component {
 
   render() {
     return (
-      <Form.Item>
+      <Form.Item {...this.props.formWrapperProps}>
         <DebounceInput
           debounceTimeout={500}
           onChange={ this.props.onChange }
           value={ this.state.name }
-          element={props =>  <input {...props} />}
+          element={props =>  <input {...props} {...this.props.inputProps} />}
         />
       </Form.Item>
     )

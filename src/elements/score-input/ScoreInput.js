@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
-import { InputNumber, Button, Row, Col } from 'antd';
+import { Input, Button, Row } from 'antd';
 
 export default class ScoreInput extends Component {
 
@@ -24,19 +24,11 @@ export default class ScoreInput extends Component {
 
   render() {
     return (
-      <Fragment>
-        <Col span={1}>
+      <Row type="flex" style={{flexDirection: 'row', flexWrap: 'nowrap'}}>
           <Button type="primary" onClick={this.handleValueChange(-1)} > - </Button>
-        </Col>
-
-        <Col span={6}>
-          <InputNumber value={this.props.value} onChange={this.handleValueChange()} />
-        </Col>
-
-        <Col span={1}>
+          <Input value={this.props.value} onChange={this.handleValueChange()} />
           <Button type="primary" onClick={this.handleValueChange(1)}   > + </Button>
-        </Col>
-      </Fragment>
+      </Row>
     )
   }
 }

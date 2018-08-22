@@ -9,10 +9,12 @@ export const DashboardRoutes = [
   {
     path: `${rootUrl}/index.html/`,
     exact: true,
-    component: ({location}) => (<Redirect to={{
-      pathname: `${rootUrl}/setinfo/`,
-      search: location.search
-      }}/>),
+    component: ({location}) => (
+        <Redirect to={{
+          pathname: `${rootUrl}/setinfo/`,
+          search: location.search
+        }}/>
+      ),
   },
   {
     path: `${rootUrl}/setinfo/`,
